@@ -1,0 +1,25 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+   name: k8s-hello-cloud-app-deploy
+spec:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: k8s-hello-cloud-app
+   minReadySeconds: 10
+   strategy:
+      type: RollingUpdate
+      rollingUpdate:
+         maxUnavailable: 1
+         maxSurge: 1
+   template:
+      metadata:
+         labels:
+            app: k8s-hello-cloud-app
+      spec:
+         containers:
+         - name: k8s-hello-cloud-app
+           image: sai194/hello-cloud-app
+           ports:
+           - containerPort: 8080
